@@ -39,8 +39,9 @@ variable "placeholder" {
 
 variable "env" {
   type = string
+  default = "dev"
   validation {
-    condition     = var.env == "dev" || var.env == "qa" || var.env == "prod"
+    condition     = contains(["dev", "qa", "prod"], var.env)
     error_message = "The environment env must be dev, qa or prod"
   }
 }
