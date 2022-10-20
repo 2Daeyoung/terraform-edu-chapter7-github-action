@@ -36,3 +36,11 @@ variable "placeholder" {
   default     = "placekitten.com"
   description = "Image-as-a-service URL. Some other fun ones to try are fillmurray.com, placecage.com, placebeard.it, loremflickr.com, baconmockup.com, placeimg.com, placebear.com, placeskull.com, stevensegallery.com, placedog.net"
 }
+
+variable "env" {
+  type = string
+  validation {
+    condition     = var.env == "dev" || var.env == "qa" || var.env == "prod"
+    error_message = "The environment env must be dev, qa or prod"
+  }
+}
