@@ -1,4 +1,16 @@
 name: Terraform DEV Destroy
+
+on:
+  workflow_dispatch:
+    inputs:
+      developer:
+        description: 'Trigger'
+        required: true
+        default: 'dispatch_job'
+        type: choice
+        options:
+          - dispatch_job
+
 env:
   MY_PREFIX: DEV
   TF_VERSION: 1.2.5
@@ -22,7 +34,8 @@ jobs:
         run: terraform validate -no-color
       - name: Terraform destroy
         id: Destroy
-        run: terraform plan -no-color -var=prefix=“$MY_PREFIX”
+        run: terraform destroy --auto-approve -no-color -var=prefix=“$MY_PREFIX”
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
